@@ -22,14 +22,16 @@ if(isset($res['username']) && isset($res['password'])){
 $result = mysqli_query($conn, "SELECT * FROM `USER`");
 $v = P($result, $username, $password);
 if($v!=null){
-        $ves = array('role'=>$v);
+        $ves = array('role'=>$v, 'login'=>true);
         $j = json_encode($ves);
         echo $j;
         return $j;
 }
 else{
-        header ("Location: ");
-        echo "Invalid";
+        $ves = array("login"=>false);
+        $j=json_encode($ves);
+        echo $j;
+        return $j;
 }
 $conn->close();
 ?>
