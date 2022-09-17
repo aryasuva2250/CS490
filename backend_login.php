@@ -1,9 +1,19 @@
 <?php
 include ("databaseConnection.php");
 include ("db.php");
+//login
+//hash the password
+function hashPassword($password){
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        return hashed_password;
+}
+//login check
 if(isset($_POST["username"]) && isset($_POST["passwd"])){
         $username = $_POST['username'];
         $password = $_POST['passwd'];
+        //$password = hashPassword($password);
+		$hashedPassword = hashPassword($password);
+        $password = password_verify($password, $hashedPassword);
         if(!empty($username) && !empty($password)){
                 $result = mysqli_query($conn, "SELECT * FROM `USER` WHERE username = '$username'");
                 if($result){
@@ -30,6 +40,8 @@ if(isset($_POST["username"]) && isset($_POST["passwd"])){
                 }
         }
 }
+
 $conn->close();
 ?>
+
 
